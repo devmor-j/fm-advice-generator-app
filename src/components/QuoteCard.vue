@@ -47,6 +47,12 @@ q {
 
 .separator-line {
   padding-block: 1.5rem;
+  min-width: 100%;
+}
+
+.separator-line > * {
+  min-width: 100%;
+  margin: auto;
 }
 
 .get-advice {
