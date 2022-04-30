@@ -32,7 +32,7 @@ let advice = reactive({
 });
 
 // on each page refresh a new advice is recieved
-onMounted(getAdvice);
+// onMounted(getAdvice);
 
 </script>
 
