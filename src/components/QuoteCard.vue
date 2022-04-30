@@ -7,7 +7,7 @@
     <q>It is easy to sit up and take notice, what's difficult is getting up and taking action.</q>
     <picture class="separator-line">
       <source media="(min-width: 768px)" srcset="../assets/images/pattern-divider-desktop.svg">
-      <img src="../assets/images/pattern-divider-mobile.svg" alt="">
+      <img src="../assets/images/pattern-divider-mobile.svg" alt="" draggable="false">
     </picture>
     <div class="get-advice-wrapper">
       <button class="get-advice glow-hover">
@@ -30,6 +30,12 @@
   position: relative;
   width: min(100% - 2rem, 25rem);
   margin-inline: auto;
+}
+
+@media screen and (min-width: 768px) {
+  .card {
+    width: min(100% - 2rem, 32rem);
+  }
 }
 
 h1 {
