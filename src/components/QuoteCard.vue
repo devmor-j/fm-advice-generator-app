@@ -41,8 +41,6 @@ q {
 }
 
 .separator-line {
-  display: block;
-  inline-size: 100%;
   padding-block: 1.5rem;
 }
 
