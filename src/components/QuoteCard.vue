@@ -9,9 +9,11 @@
       <source media="(min-width: 768px)" srcset="../assets/images/pattern-divider-desktop.svg">
       <img src="../assets/images/pattern-divider-mobile.svg" alt="">
     </picture>
-    <button class="get-advice">
-      <img src="@/assets/images/icon-dice.svg" alt="get advice">
-    </button>
+    <div class="get-advice-wrapper">
+      <button class="get-advice glow-hover">
+        <img src="@/assets/images/icon-dice.svg" alt="get advice">
+      </button>
+    </div>
   </div>
 </template>
 
@@ -55,6 +57,11 @@ q {
   margin: auto;
 }
 
+.get-advice-wrapper {
+  position: absolute;
+  bottom: -10%;
+}
+
 .get-advice {
   background-color: hsl(150, 100%, 66%);
   display: flex;
@@ -63,7 +70,24 @@ q {
   padding: 1.5rem;
   border-radius: 50%;
   border: none;
+  cursor: pointer;
+}
+
+.glow-hover {
+  position: relative;
+}
+
+.glow-hover::after {
+  content: '';
   position: absolute;
-  bottom: -10%;
+  inset: 0;
+  border-radius: 50%;
+  opacity: 0;
+  box-shadow: 0px 0px 36px hsl(150, 100%, 66%);
+  transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.glow-hover:hover::after {
+  opacity: 1;
 }
 </style>
