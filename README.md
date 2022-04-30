@@ -15,12 +15,18 @@ This is a solution to the [Advice generator app challenge on Frontend Mentor](ht
 
 ### Screenshot
 
-![](./screenshot.jpg)
+*Desktop on 1536px*
+
+![Desktop](./screenshot/Desktop%20-%20Frontend%20Mentor%20Advice%20generator%20app.webp)
+
+*Mobile on 475px*
+
+![Mobile](./screenshot/Mobile%20-%20Frontend%20Mentor%20Advice%20generator%20app.webp)
 
 ### Links
 
-- Solution URL: [Add solution URL here](https://your-solution-url.com)
-- Live Site URL: [Add live site URL here](https://your-live-site-url.com)
+- Solution URL: [Github Repository](https://github.com/devmor-j/fm-advice-generator-app)
+- Live Site URL: [Deployed on Github Pages](https://devmor-j.github.io/fm-advice-generator-app/)
 
 ## My process
 
