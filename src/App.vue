@@ -1,11 +1,20 @@
 <script setup>
+import QuoteCard from '@/components/QuoteCard.vue';
 </script>
 
 <template>
   <main>
-    <h1>Hello</h1>
+    <QuoteCard />
   </main>
 </template>
 
-<style>
+<style scoped>
+main {
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  width: min(100% - 2rem, 25rem);
+  margin-inline: auto;
+  
+}
 </style>
