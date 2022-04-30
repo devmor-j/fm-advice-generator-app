@@ -1,16 +1,51 @@
 <script setup>
+import { onMounted, reactive } from 'vue';
+
+/**
+ * call adviceslip api to get a random advice
+ * @return {Object} with an id and advice
+ */
+async function getAdvice() {
+  return await fetch('https://api.adviceslip.com/advice')
+    .then(response => {
+      if (response.status >= 200 && response.status < 300) {
+        return Promise.resolve(response);
+      }
+      return Promise.reject(new Error(response.statusText));
+    })
+    .then(response => response.json())
+    .then(result => {
+      advice.id = result.slip.id;
+      advice.advice = result.slip.advice;
+      return result;
+    })
+    .catch(error => {
+      console.error(error);
+    });
+};
+
+// default advice for screenshot only
+// remove advice below and call getAdvice onMounted
+let advice = reactive({
+  "id": 117,
+  "advice": "It is easy to sit up and take notice, what's difficult is getting up and taking action."
+});
+
+// on each page refresh a new advice is recieved
+onMounted(getAdvice);
+
 </script>
 
 <template>
   <div class="card">
-    <h1>Advice #117</h1>
-    <q>It is easy to sit up and take notice, what's difficult is getting up and taking action.</q>
+    <h1>Advice #{{ advice.id }}</h1>
+    <q>{{ advice.advice }}</q>
     <picture class="separator-line">
       <source media="(min-width: 768px)" srcset="../assets/images/pattern-divider-desktop.svg">
       <img src="../assets/images/pattern-divider-mobile.svg" alt="" draggable="false">
     </picture>
     <div class="get-advice-wrapper">
-      <button class="get-advice glow-hover">
+      <button class="get-advice glow-hover" @click="getAdvice">
         <img src="@/assets/images/icon-dice.svg" alt="get advice">
       </button>
     </div>
