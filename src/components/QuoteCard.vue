@@ -5,7 +5,10 @@
   <div class="card">
     <h1>Advice #117</h1>
     <q>It is easy to sit up and take notice, what's difficult is getting up and taking action.</q>
-    <img class="separator-line" src="@/assets/images/pattern-divider-mobile.svg" alt="">
+    <picture class="separator-line">
+      <source media="(min-width: 768px)" srcset="../assets/images/pattern-divider-desktop.svg">
+      <img src="../assets/images/pattern-divider-mobile.svg" alt="">
+    </picture>
     <button class="get-advice">
       <img src="@/assets/images/icon-dice.svg" alt="get advice">
     </button>
