@@ -26,6 +26,8 @@
   padding-block-end: 3rem;
   border-radius: 0.75rem;
   position: relative;
+  width: min(100% - 2rem, 25rem);
+  margin-inline: auto;
 }
 
 h1 {
