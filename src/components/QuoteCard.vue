@@ -1,30 +1,66 @@
 <script setup>
-import { onMounted, reactive } from 'vue';
-
+import { onMounted, reactive, ref } from 'vue';
 const adviceApiUrl = 'https://api.adviceslip.com/advice';
 
-async function getAdvice({ target }) {
-  target.classList.add('roll-animation');
+function waitForAdvice(getAdviceElement) {
+  isApiWaiting.value = true;
 
-  const response = await fetch(adviceApiUrl);
-  const data = await response.json();
+  setTimeout(() => {
+    isApiWaiting.value = false;
+  }, 1500);
 
-  setAdvice(data.slip);
+  getAdviceElement.classList.add('roll-animation');
 
-  target.addEventListener('animationiteration', () => {
-    target.classList.remove('roll-animation');
+  // prefersReducedMotion is true if user prefers reduced motion;
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (prefersReducedMotion) {
+    // in case user prefers a reduced motion content
+    // we do not need to hide quote element
+    // so there will be no transition
+    return;
+  }
+
+  // if user is ok with transitions
+  // we trigger a simple one
+  isQuoteShown.value = false;
+}
+
+function finishWaitForAdvice(getAdviceElement) {
+  isQuoteShown.value = true;
+
+  getAdviceElement.addEventListener('animationiteration', () => {
+    getAdviceElement.classList.remove('roll-animation');
   });
 }
 
-let advice = reactive({
+async function getAdvice({ target }) {
+  // handle animations and hide current advice
+  waitForAdvice(target);
+
+  // call advice api
+  const response = await fetch(adviceApiUrl);
+  const data = await response.json();
+
+  // inject new advice to dom
+  setAdvice(data.slip);
+
+  // finish waiting animations and reveal new advice
+  finishWaitForAdvice(target);
+}
+
+let quote = reactive({
   id: 117,
   advice: "It is easy to sit up and take notice, what's difficult is getting up and taking action."
 });
 
 function setAdvice(data) {
-  advice.id = data.id;
-  advice.advice = data.advice;
+  quote.id = data.id;
+  quote.advice = data.advice;
 }
+
+let isQuoteShown = ref(true);
+let isApiWaiting = ref(false);
 
 // on each page refresh a new advice is recieved
 // onMounted(getAdvice);
@@ -33,9 +69,10 @@ function setAdvice(data) {
 
 <template>
   <div class="card">
-    <h1>Advice #{{ advice.id }}</h1>
-
-    <q>{{ advice.advice }}</q>
+    <h1>Advice #{{ quote.id }}</h1>
+    <transition name="quote">
+      <q v-show="isQuoteShown">{{ quote.advice }}</q>
+    </transition>
 
     <picture class="separator-line">
       <source media="(min-width: 768px)" srcset="../assets/images/pattern-divider-desktop.svg">
@@ -43,8 +80,8 @@ function setAdvice(data) {
     </picture>
 
     <div class="get-advice-wrapper">
-      <button class="get-advice glow-hover" @click="getAdvice">
-        <img src="@/assets/images/icon-dice.svg" alt="get advice">
+      <button class="get-advice glow-hover" @click="getAdvice" :disabled="isApiWaiting">
+        <img src="@/assets/images/icon-dice.svg" alt="get advice" draggable="false">
       </button>
     </div>
 
@@ -52,6 +89,17 @@ function setAdvice(data) {
 </template>
 
 <style scoped>
+.quote-enter-active,
+.quote-leave-active {
+  transition: opacity 0.5s ease, transform 0.5s ease-in-out;
+}
+
+.quote-enter-from,
+.quote-leave-to {
+  opacity: 0;
+  transform: translateY(10%);
+}
+
 .card {
   background-color: hsl(217, 19%, 24%);
   display: flex;
@@ -87,6 +135,11 @@ q {
   text-align: center;
 }
 
+q::before,
+q::after {
+  opacity: 0.5;
+}
+
 .separator-line {
   padding-block: 1.5rem;
   min-width: 100%;
@@ -114,6 +167,11 @@ q {
   cursor: pointer;
 }
 
+.get-advice[disabled] {
+  background-color: hsl(150, 50%, 66%);
+  cursor: wait;
+}
+
 .glow-hover {
   position: relative;
 }
@@ -125,7 +183,7 @@ q {
   border-radius: 50%;
   opacity: 0;
   box-shadow: 0px 0px 36px hsl(150, 100%, 66%);
-  transition: all 0.3s cubic-bezier(0.16, 0.85, 0.45, 1);
+  transition: opacity 0.3s cubic-bezier(0.16, 0.85, 0.45, 1);
 }
 
 .glow-hover:hover::after {
@@ -133,11 +191,10 @@ q {
 }
 
 .roll-animation {
-  animation: roll 0.5s ease-in-out infinite;
+  animation: roll 0.5s ease-in-out 10;
 }
 
 @keyframes roll {
-
   0% {
     transform: rotate(0deg);
   }
