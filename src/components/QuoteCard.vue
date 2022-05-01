@@ -1,5 +1,7 @@
 <script setup>
 import { onMounted, reactive, ref } from 'vue';
+
+// request below will get a random advice from api
 const adviceApiUrl = 'https://api.adviceslip.com/advice';
 
 function waitForAdvice(getAdviceElement) {
@@ -34,7 +36,7 @@ function finishWaitForAdvice(getAdviceElement) {
   });
 }
 
-async function getAdvice({ target }) {
+async function getRandomAdvice({ target }) {
   // handle animations and hide current advice
   waitForAdvice(target);
 
@@ -63,8 +65,7 @@ let isQuoteShown = ref(true);
 let isApiWaiting = ref(false);
 
 // on each page refresh a new advice is recieved
-// onMounted(getAdvice);
-
+// onMounted(getRandomAdvice);
 </script>
 
 <template>
@@ -80,7 +81,7 @@ let isApiWaiting = ref(false);
     </picture>
 
     <div class="get-advice-wrapper">
-      <button class="get-advice glow-hover" @click="getAdvice" :disabled="isApiWaiting">
+      <button class="get-advice glow-hover" @click="getRandomAdvice" :disabled="isApiWaiting">
         <img src="@/assets/images/icon-dice.svg" alt="get advice" draggable="false">
       </button>
     </div>
