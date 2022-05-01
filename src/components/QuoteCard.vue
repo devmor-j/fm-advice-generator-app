@@ -3,11 +3,18 @@ import { onMounted, reactive } from 'vue';
 
 const adviceApiUrl = 'https://api.adviceslip.com/advice';
 
-async function getAdvice() {
+async function getAdvice({ target }) {
+  target.classList.add('roll-animation');
+
   const response = await fetch(adviceApiUrl);
   const data = await response.json();
+
   setAdvice(data.slip);
-};
+
+  target.addEventListener('animationiteration', () => {
+    target.classList.remove('roll-animation');
+  });
+}
 
 let advice = reactive({
   id: 117,
@@ -71,7 +78,7 @@ h1 {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.25rem;
-  padding-block: 1.5rem;
+  padding-block: 1.25rem;
 }
 
 q {
@@ -83,6 +90,7 @@ q {
 .separator-line {
   padding-block: 1.5rem;
   min-width: 100%;
+  user-select: none;
 }
 
 .separator-line > * {
@@ -100,7 +108,7 @@ q {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 1.5rem;
+  padding: 1.375rem;
   border-radius: 50%;
   border: none;
   cursor: pointer;
@@ -117,10 +125,25 @@ q {
   border-radius: 50%;
   opacity: 0;
   box-shadow: 0px 0px 36px hsl(150, 100%, 66%);
-  transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+  transition: all 0.3s cubic-bezier(0.16, 0.85, 0.45, 1);
 }
 
 .glow-hover:hover::after {
   opacity: 1;
+}
+
+.roll-animation {
+  animation: roll 0.5s ease-in-out infinite;
+}
+
+@keyframes roll {
+
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 </style>
