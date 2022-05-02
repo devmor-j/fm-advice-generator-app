@@ -9,7 +9,7 @@ function waitForAdvice(getAdviceElement) {
 
   setTimeout(() => {
     isApiWaiting.value = false;
-  }, 1500);
+  }, 2000);
 
   getAdviceElement.classList.add('roll-animation');
 
@@ -169,7 +169,7 @@ q::after {
 }
 
 .get-advice[disabled] {
-  background-color: hsl(150, 50%, 66%);
+  background-color: hsl(150, 15%, 66%);
   cursor: wait;
 }
 
@@ -192,7 +192,7 @@ q::after {
 }
 
 .roll-animation {
-  animation: roll 0.5s ease-in-out 10;
+  animation: roll 0.5s ease-in-out 4;
 }
 
 @keyframes roll {
