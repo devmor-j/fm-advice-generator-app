@@ -16,16 +16,11 @@ function waitForAdvice(getAdviceElement) {
   // prefersReducedMotion is true if user prefers reduced motion;
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  if (prefersReducedMotion) {
-    // in case user prefers a reduced motion content
-    // we do not need to hide quote element
-    // so there will be no transition
-    return;
+  // in case user has not mentioned reduced motion
+  // we will hide quote element to trigger a transition
+  if (!prefersReducedMotion) {
+    isQuoteShown.value = false;
   }
-
-  // if user is ok with transitions
-  // we trigger a simple one
-  isQuoteShown.value = false;
 }
 
 function finishWaitForAdvice(getAdviceElement) {
@@ -169,7 +164,7 @@ q::after {
 }
 
 .get-advice[disabled] {
-  background-color: hsl(150, 15%, 66%);
+  background-color: hsl(150, 25%, 66%);
   cursor: wait;
 }
 
@@ -185,6 +180,10 @@ q::after {
   opacity: 0;
   box-shadow: 0px 0px 36px hsl(150, 100%, 66%);
   transition: opacity 0.3s cubic-bezier(0.16, 0.85, 0.45, 1);
+}
+
+.glow-hover:disabled::after {
+  box-shadow: 0px 0px 36px hsl(150, 25%, 66%);
 }
 
 .glow-hover:hover::after {
