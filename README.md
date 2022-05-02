@@ -1,16 +1,20 @@
 # Frontend Mentor - Advice generator app solution
 
-This is a solution to the [Advice generator app challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/advice-generator-app-QdUG-13db). Frontend Mentor challenges help you improve your coding skills by building realistic projects.
+This is my solution to the [Advice generator app challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/advice-generator-app-QdUG-13db). Frontend Mentor challenges help you improve your coding skills by building realistic projects.
 
-## Screenshot
+## Preview
 
-### Desktop on 1536px
+### Normal Motion
 
-![Desktop](./screenshot/Desktop%20-%20Frontend%20Mentor%20Advice%20generator%20app.webp)
+If user has no preference for reduced-motion, result will be like this:
 
-### Mobile on 475px
+![Normal Motion](./screenshot/Advice%20Generator%20Normal%20Motion.gif)
 
-![Mobile](./screenshot/Mobile%20-%20Frontend%20Mentor%20Advice%20generator%20app.webp)
+### Reduced Motion
+
+Some users prefer reduced-motion so we respect that as well:
+
+![Reduced Motion](./screenshot/Advice%20Generator%20Reduced%20Motion.gif)
 
 ## Links
 
@@ -21,6 +25,8 @@ This is a solution to the [Advice generator app challenge on Frontend Mentor](ht
 
 - Mobile-first workflow
 - [Vue](https://vuejs.org/) - JS framework
+- [Vite](https://vitejs.dev/) - Builder
+- [Modern Css Reset](https://github.com/hankchizljaw/modern-css-reset) - One of the best resetters
 
 ## Author
 
