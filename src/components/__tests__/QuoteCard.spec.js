@@ -28,7 +28,9 @@ describe('QuoteCard', () => {
     expect(wrapper.find('.error').exists()).toBe(false);
   });
 
-  it('click works on the get-advice button', async () => {
-    await wrapper.get('button.get-advice').trigger('click');
-  });
+  // TODO: test a full api call on get-advice click
+  // it("click works on the get-advice button", async () => {
+  //   await wrapper.get("button.get-advice").trigger("click");
+  // });
+});
 })
