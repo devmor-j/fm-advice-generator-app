@@ -11,6 +11,9 @@ function waitForAdvice(getAdviceElement) {
     isApiWaiting.value = false;
   }, 2000);
 
+  // remove possible error message from previous api call
+  hasFailedToFetch.value = false;
+
   getAdviceElement.classList.add('roll-animation');
 
   // prefersReducedMotion is true if user prefers reduced motion;
@@ -31,16 +34,32 @@ function finishWaitForAdvice(getAdviceElement) {
   });
 }
 
+function handleFailedToFetch() {
+  hasFailedToFetch.value = true;
+  isApiWaiting.value = false;
+
+  const timestamp = new Date().toLocaleTimeString();
+  console.log(`${timestamp} --> failed to fetch advice from api`);
+}
+
 async function getRandomAdvice({ target }) {
   // handle animations and hide current advice
   waitForAdvice(target);
 
-  // call advice api
-  const response = await fetch(adviceApiUrl);
-  const data = await response.json();
+  // try to call api and catch potential internet errors
+  try {
+    // call advice api
+    const response = await fetch(adviceApiUrl);
+    const data = await response.json();
 
-  // inject new advice to dom
-  setAdvice(data.slip);
+    // inject new advice to dom
+    setAdvice(data.slip);
+  } catch (error) {
+    // check error message for fetch issues
+    if (/failed to fetch/i.test(error)) {
+      handleFailedToFetch();
+    }
+  }
 
   // finish waiting animations and reveal new advice
   finishWaitForAdvice(target);
@@ -58,6 +77,7 @@ function setAdvice(data) {
 
 let isQuoteShown = ref(true);
 let isApiWaiting = ref(false);
+let hasFailedToFetch = ref(false);
 
 // on each page refresh a new advice is recieved
 // onMounted(getRandomAdvice);
@@ -79,6 +99,10 @@ let isApiWaiting = ref(false);
       <button class="get-advice glow-hover" @click="getRandomAdvice" :disabled="isApiWaiting">
         <img src="@/assets/images/icon-dice.svg" alt="get advice" draggable="false">
       </button>
+    </div>
+
+    <div v-if="hasFailedToFetch" class="error">
+      <p>Seems like there is a problem with your connection, please try again!</p>
     </div>
 
   </div>
@@ -202,5 +226,12 @@ q::after {
   100% {
     transform: rotate(360deg);
   }
+}
+
+.error {
+  color: hsla(60, 100%, 85%, 0.75);
+  font-family: sans-serif;
+  font-size: 0.875rem;
+  text-align: center;
 }
 </style>
