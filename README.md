@@ -24,9 +24,11 @@ Some users prefer reduced-motion so we respect that as well:
 ## Built with
 
 - Mobile-first workflow
-- [Vue](https://vuejs.org/) - JS framework
-- [Vite](https://vitejs.dev/) - Builder
+- [Vue.js 3](https://vuejs.org/) - The Progressive JavaScript Framework
+- [Vite](https://vitejs.dev/) - Next Generation Frontend Tooling (Builder)
 - [Modern Css Reset](https://github.com/hankchizljaw/modern-css-reset) - One of the best resetters
+- [Vitest](https://vitest.dev/) - A blazing fast unit-test framework powered by [Vite](https://vitejs.dev/)
+- [Vue Test Utils](https://test-utils.vuejs.org/) - The official testing suite utils for [Vue.js 3](https://vuejs.org/)
 
 ## Author
 
