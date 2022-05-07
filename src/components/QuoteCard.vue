@@ -1,8 +1,8 @@
 <script setup>
-import { onMounted, reactive, ref } from 'vue';
+import { reactive, ref } from "vue";
 
 // request below will get a random advice from api
-const adviceApiUrl = 'https://api.adviceslip.com/advice';
+const adviceApiUrl = "https://api.adviceslip.com/advice";
 
 function waitForAdvice(getAdviceElement) {
   isApiWaiting.value = true;
@@ -14,10 +14,12 @@ function waitForAdvice(getAdviceElement) {
   // remove possible error message from previous api call
   hasFailedToFetch.value = false;
 
-  getAdviceElement.classList.add('roll-animation');
+  getAdviceElement.classList.add("roll-animation");
 
   // prefersReducedMotion is true if user prefers reduced motion;
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const prefersReducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
 
   // in case user has not mentioned reduced motion
   // we will hide quote element to trigger a transition
@@ -29,8 +31,8 @@ function waitForAdvice(getAdviceElement) {
 function finishWaitForAdvice(getAdviceElement) {
   isQuoteShown.value = true;
 
-  getAdviceElement.addEventListener('animationiteration', () => {
-    getAdviceElement.classList.remove('roll-animation');
+  getAdviceElement.addEventListener("animationiteration", () => {
+    getAdviceElement.classList.remove("roll-animation");
   });
 }
 
@@ -67,7 +69,8 @@ async function getRandomAdvice({ target }) {
 
 let quote = reactive({
   id: 117,
-  advice: "It is easy to sit up and take notice, what's difficult is getting up and taking action."
+  advice:
+    "It is easy to sit up and take notice, what's difficult is getting up and taking action.",
 });
 
 function setAdvice(data) {
@@ -91,20 +94,36 @@ let hasFailedToFetch = ref(false);
     </transition>
 
     <picture class="separator-line">
-      <source media="(min-width: 768px)" srcset="../assets/images/pattern-divider-desktop.svg">
-      <img src="../assets/images/pattern-divider-mobile.svg" alt="" draggable="false">
+      <source
+        media="(min-width: 768px)"
+        srcset="../assets/images/pattern-divider-desktop.svg"
+      />
+      <img
+        src="../assets/images/pattern-divider-mobile.svg"
+        alt=""
+        draggable="false"
+      />
     </picture>
 
     <div class="get-advice-wrapper">
-      <button class="get-advice glow-hover" @click="getRandomAdvice" :disabled="isApiWaiting">
-        <img src="@/assets/images/icon-dice.svg" alt="get advice" draggable="false">
+      <button
+        class="get-advice glow-hover"
+        @click="getRandomAdvice"
+        :disabled="isApiWaiting"
+      >
+        <img
+          src="@/assets/images/icon-dice.svg"
+          alt="get advice"
+          draggable="false"
+        />
       </button>
     </div>
 
     <div v-if="hasFailedToFetch" class="error">
-      <p>Seems like there is a problem with your connection, please try again!</p>
+      <p>
+        Seems like there is a problem with your connection, please try again!
+      </p>
     </div>
-
   </div>
 </template>
 
@@ -197,7 +216,7 @@ q::after {
 }
 
 .glow-hover::after {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
   border-radius: 50%;

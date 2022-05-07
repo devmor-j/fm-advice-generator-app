@@ -1,5 +1,5 @@
 <script setup>
-import QuoteCard from '@/components/QuoteCard.vue';
+import QuoteCard from "@/components/QuoteCard.vue";
 </script>
 
 <template>
