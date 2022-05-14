@@ -51,7 +51,7 @@ async function getRandomAdvice({ target }) {
   // try to call api and catch potential internet errors
   try {
     // call advice api
-    const response = await fetch(adviceApiUrl);
+    const response = await fetch(adviceApiUrl, {cache: 'no-store'});
     const data = await response.json();
 
     // inject new advice to dom
